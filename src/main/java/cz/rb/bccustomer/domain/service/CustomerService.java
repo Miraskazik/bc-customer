@@ -57,12 +57,18 @@ public class CustomerService {
         }
 
         customer.setId(actualCustomer.get().getId());
-        updateCustomerInDatabase(customer);
+        updateCustomerInDatabase(customer, actualCustomer.get().getDogsId());
 
         return customer;
     }
 
-    private void updateCustomerInDatabase(final CustomerMessage updatedCustomer) {
+    /**
+     * Update zaznamu o zakaznikovi, ID a seznam psu zustava puvodni
+     *
+     * @param updatedCustomer updatovany zaznam
+     * @param dogsId          puvodni senzam psu
+     */
+    private void updateCustomerInDatabase(final CustomerMessage updatedCustomer, final String dogsId) {
         customerRepository.updateCustomer(
                 updatedCustomer.getId(), // id ponechame stejne
                 updatedCustomer.getFirstName(),
@@ -70,6 +76,6 @@ public class CustomerService {
                 updatedCustomer.getCity(),
                 updatedCustomer.getPrice(),
                 updatedCustomer.getDetails(),
-                parseDogsId(updatedCustomer.getDogsId()));
+                dogsId);
     }
 }
